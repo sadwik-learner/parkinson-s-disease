@@ -44,7 +44,6 @@ pointer:
   checkpoint_name: pointer_model.pth
 
 handwriting:
-  images_dir: datasets/handwriting_images
   labels_csv: null
   image_size: 224
   batch_size: 16

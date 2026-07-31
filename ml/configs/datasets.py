@@ -51,3 +51,9 @@ def resolve_tappy_dir(config: dict[str, Any]) -> Path:
         if data_archives and user_archives:
             return data_archives[0].parent
     raise FileNotFoundError("Existing Tappy archives were not found under the configured datasets directory.")
+
+
+import kagglehub
+
+# Download latest version
+path = kagglehub.dataset_download("banilkumar20phd7071/handwritten-parkinsons-disease-augmented-data")

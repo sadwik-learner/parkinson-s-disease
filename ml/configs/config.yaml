@@ -1,0 +1,62 @@
+paths:
+  datasets_dir: datasets
+  spiral_images_dir: datasets/spiral_images
+  spiral_labels_csv: null
+  tappy_dir: datasets/tappy-keystroke-data-1.0.0
+  checkpoints_dir: ml/checkpoints
+  outputs_dir: ml/outputs
+  logs_dir: ml/logs
+
+runtime:
+  seed: 42
+  num_workers: 0
+  device: auto
+
+spiral:
+  dataset_id: team-ai/parkinson-disease-spiral-drawings
+  image_size: 224
+  batch_size: 16
+  epochs: 30
+  fine_tune_epochs: 15
+  learning_rate: 0.0003
+  fine_tune_learning_rate: 0.00003
+  weight_decay: 0.0001
+  validation_fraction: 0.15
+  test_fraction: 0.15
+  early_stopping_patience: 7
+  pretrained: true
+  horizontal_flip: false
+  checkpoint_name: spiral_model.pth
+
+tappy:
+  test_fraction: 0.25
+  cv_folds: 3
+  search_iterations: 16
+  checkpoint_name: tappy_model.pkl
+
+pointer:
+  dataset_csv: datasets/pointer/pointer_events.csv
+  sequence_length: 64
+  minimum_transformer_sequences: 100
+  batch_size: 32
+  epochs: 30
+  learning_rate: 0.001
+  checkpoint_name: pointer_model.pth
+
+handwriting:
+  images_dir: datasets/handwriting_images
+  labels_csv: null
+  image_size: 224
+  batch_size: 16
+  epochs: 25
+  learning_rate: 0.0002
+  checkpoint_name: handwriting_model.pth
+
+fusion:
+  checkpoint_name: fusion_model.pkl
+  paired_training_csv: null
+  weights:
+    spiral: 1.0
+    finger_tap: 1.0
+    pointer: 1.0
+    handwriting: 1.0

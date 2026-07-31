@@ -11,9 +11,11 @@ from app.config import (
     API_TITLE,
     API_VERSION,
     HANDWRITING_UPLOAD_DIR,
+    PREDICTION_UPLOAD_DIR,
     SPIRAL_UPLOAD_DIR,
 )
 from app.routers import handwriting, motion, prediction, spiral
+from app.services.inference import inference_service
 from app.utils.file_utils import ensure_upload_directories
 
 
@@ -23,7 +25,8 @@ def create_app() -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         # Upload folders are created automatically so file routes can save safely.
-        ensure_upload_directories(SPIRAL_UPLOAD_DIR, HANDWRITING_UPLOAD_DIR)
+        ensure_upload_directories(SPIRAL_UPLOAD_DIR, HANDWRITING_UPLOAD_DIR, PREDICTION_UPLOAD_DIR)
+        inference_service.load_models()
         yield
 
     app = FastAPI(title=API_TITLE, version=API_VERSION, lifespan=lifespan)
